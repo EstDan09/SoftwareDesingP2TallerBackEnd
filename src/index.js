@@ -1,7 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
-const cors = require("cors"); // Importar el middleware de CORS
+const cors = require("cors");
 
 dotenv.config();
 
@@ -11,17 +11,17 @@ const app = express();
 
 // Conectar a la base de datos
 connectDB();
-
+//
 // Middleware para habilitar CORS
 const corsOptions = {
-  origin: "http://localhost:4200", 
+  origin: "http://localhost:4200",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, 
+  credentials: true,
 };
 app.use(cors(corsOptions));
 
-// Middleware para analizar JSON
-app.use(express.json());
+// Middleware para analizar JSON y aumentar el límite
+app.use(express.json({ limit: "100mb" }));
 
 // Rutas de la aplicación
 require("./routes/usuario")(app);
