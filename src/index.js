@@ -11,7 +11,7 @@ const app = express();
 
 // Conectar a la base de datos
 connectDB();
-
+//
 // Middleware para habilitar CORS
 const corsOptions = {
   origin: "http://localhost:4200",
