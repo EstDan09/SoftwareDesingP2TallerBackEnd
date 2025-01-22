@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "lateral-goods-448602-d8",
+    "private_key_id": "ec799d31b6a623a22b90bb83c0cfd89685131859",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCna3tqOVSMdzlz\n15IBAhtWv4n1Xf4bG+AN/lWZfArr1Fj5MlehPHx8bohuIvSn1lbzkqgpiRjqhide\nuyI4DTDz5A6/zL3w+3RfvvCsuuGhmBEPCqNWp9Y/o5E6mv+QjiCUxuk9+VX09aI+\nvO5KoLMs8ZddAp6Fdz/DkdFKvovSG5fTfYGiyDuV+BtfKccN5rSW2HFxdGbLsnwZ\nTen0Enw0L35haScl3Pd6h8XLO7+cgtvDZnklC+ZOs0o1u97/q+OdGXdDHcNGuLrv\nAc4XxdJig6rduZVEiLSy7Fw0spcjGf15iZFMMViMFmImayK6XtPRpT2DP7JUnE5O\nfnECHAAzAgMBAAECggEAJV5UOa16NbAW3shrClaSC5bNEDtekGZ0aCswqAWL2n+X\nLGgULyT1FEEHqq2atiudVNiTOFIlgZNYDkjuplwrZQSuVhk4/CTkIMrZpXRBEHSE\nujrBooHrzGCR9ebKzFUs6IhNX0vb58U75Yz+EyIzXADArD39bATl8p0Ffg1x3/9z\n7NnS9q23vl63oa3bpYP2Ik0Y44mrDj6e4bL6Tb2HXVskS9Jwaf90GrEjb1ED+/UJ\n8U8typhcMWp2mXg2KengPsk3rElgOX50448tXf3HlTymkHUM6u5ffLuTyVtFbOqS\nbUGU/Rn2poFE0us5iFAaK+JirJxG7WOwGxr++LVYAQKBgQDhq6VUCWVZTBrC3ych\nyCZ1WzWlwAmmmRNGCSqHvZkQcDwG+62XNFUU7x/LFf50icjO1P2UkCkeoDhJqaCY\n4u2t9jaWKAMMWW8z7RGv4IOb+nkbBLAMxyZAb5k2cLwuajwwI0UUPVTOze431Vaa\nDhOfiA2/dcaZutp212ZvxRvrAQKBgQC96651sXSNX6mUIqut0uIibBddSaDRR6nU\n9rHW0ySyxImF+eFt/AiVS0MM+IERcaHvsvUxsYygup1NnxkcNqSw2FpCzam4oHKB\n3LICZ4Flvtcu8dMv3dxbSaQznBPU34IKPgvjEzhQ5HMmZK4cqrmgBZv/b2zajI0I\njukREGcvMwKBgAvKS/j4BLOFpmBICGNbcabv/P2L6vUpSjh+ghpVbYnOU1SKEae0\ntD1DwQV7QLAWAsfLmPQKFBvlgwtWMW3LbV+JXZC6xm3+vjCYUjQ+JqIfk/Q1an1A\nal8zdW3CthI2uq5JKXLFQYkMeUWxf7TMx3muQgmevaGKgZ9z4YY1ZiABAoGAbkHH\n+520+2ohCdYC8xvtmmxEOC1JhpXjG7bIUd4sfPgqmrQR0ocx+HJED+CpFZZxm7W6\nMUpRSPJt5iVKL53tiJlh9UxujrffIlMcqNasQYREaoWLxEs55WlgQXIH9Vp4pTeW\nMRL0a8nkq9JhXlUjBKqdAPMQL+TO77v/xJ9QOA8CgYEAw+j0nuLAa8vb1KWrNMnz\nELtCXH4QWIha1PJ7PZ75M+HhzExDs50obeOyQkZzqji4EtiVON1Tvy7yVRMOYFbS\nDHBFIEelolXXkreOXo1syUR+FE69UQwn2IFeYjGZ3nzkBg9+eTtykWxbqvdjV+Dj\nkf+8AplHMWqAqwZhv88PRb4=\n-----END PRIVATE KEY-----\n",
+    "client_email": "talleraccountservice@lateral-goods-448602-d8.iam.gserviceaccount.com",
+    "client_id": "100184937550984687973",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/talleraccountservice%40lateral-goods-448602-d8.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  
