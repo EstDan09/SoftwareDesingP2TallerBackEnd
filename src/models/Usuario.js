@@ -22,7 +22,7 @@ const UsuarioSchema = mongoose.Schema({
         },
     ],
     fotoPerfil: {
-        type: String, // Almacena la imagen codificada en Base64
+        type: String,
         default: null,
     },
 });

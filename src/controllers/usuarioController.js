@@ -31,7 +31,7 @@ exports.crearUsuario = async (req, res) => {
 
 exports.obtenerUsuarios = async (req, res) => {
   try {
-    const usuarios = await Usuario.find(); //.populate('carros'); 
+    const usuarios = await Usuario.find().populate('carros'); 
     res.status(200).json({
       msg: "Lista de usuarios obtenida exitosamente.",
       data: usuarios,
