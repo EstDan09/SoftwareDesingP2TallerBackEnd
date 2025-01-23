@@ -56,3 +56,25 @@ exports.obtenerUsuario = async (req, res) => {
     res.status(500).send("Hubo un error al obtener el usuario");
   }
 };
+
+exports.verificarUsuario = async (req, res) => {
+    try {
+        if (!req.query.correo) {
+            return res.status(400).json({ msg: "Debe colocar un correo electrónico" });
+        }
+        if (!req.query.password) {
+            return res.status(400).json({ msg: "Por favor, ingrese una contraseña" });
+        }
+
+        const user = await Usuario.findOne({correo: req.query.correo});
+
+        if (user.password === req.query.password) {
+            return res.status(200).json({ msg: "Usuario verificado", data: user });
+        }
+
+        res.status(400).json({ msg: "Contraseña incorrecta", data: null });
+
+    } catch (error) {
+        console.error(error);
+    }
+}
