@@ -33,6 +33,8 @@ app.use(express.json({ limit: "100mb" }));
 
 // Rutas de la aplicación
 require("./routes/usuario")(app);
+require("./routes/carro")(app);
+
 
 // Iniciar el servidor
 app.listen(port, () => {

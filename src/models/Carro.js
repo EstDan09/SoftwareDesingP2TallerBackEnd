@@ -4,35 +4,41 @@ const CarroSchema = mongoose.Schema(
     {
         placa: {
             type: String,
-            required: true
+            required: true,
+            unique: true,
         },
         color: {
             type: String,
-            requiered: true
+            required: true
         },
         modelo: {
             type: String,
-            requiered: true
+            required: true
         },
         marca: {
             type: String,
-            requiered: true
+            required: true
         },
         year: {
-            type: number,
-            requiered: true
+            type: String,
+            required: true
         },
         estado: {
             type: String,
             required: true,
             trim: true
         },
-        reparacion: [
+        reparaciones: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Reparacion"
             }
-        ]
+        ],
+        fotoCarro: {
+            type: String,
+            default: null,
+        },
+
     }
 );
 
