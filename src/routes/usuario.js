@@ -8,4 +8,5 @@ module.exports = function (app) {
 
     // Cliente
     app.get("/public/usuario/verificar", usuarioController.verificarUsuario);
+    app.get("/public/usuario/unique/:id", usuarioController.obtenerUsuario);
 }
