@@ -13,12 +13,20 @@ const app = express();
 connectDB();
 //
 // Middleware para habilitar CORS
-const corsOptions = {
-  origin: "http://localhost:4200",
+const mobileCorsOptions = {
+  origin: process.env.MOBILE_URL, 
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, 
+};
+
+const webCorsOptions = {
+  origin: process.env.WEB_URL, 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
-app.use(cors(corsOptions));
+
+app.use(cors(webCorsOptions));
+app.use("/public", cors(mobileCorsOptions));
 
 // Middleware para analizar JSON y aumentar el límite
 app.use(express.json({ limit: "100mb" }));
