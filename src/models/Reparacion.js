@@ -2,18 +2,26 @@ const mongoose = require("mongoose");
 
 const ReparacionSchema = mongoose.Schema(
     {
-        Nombre: {
+        nombre: {
             type: String,
             required: true
         },
-        Encargado: {
+        encargado: {
             type: String,
             requiered: true
         },
-        Estado: {
+        estado: {
             type: String,
             required: true,
             trim: true
+        },
+        fotoEstado: {
+            type: String,
+            default: null,
+        },
+        aprobado: {
+            type: String,
+            default: "pending"
         }
     }
 );

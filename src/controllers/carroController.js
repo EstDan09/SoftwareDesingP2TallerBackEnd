@@ -52,7 +52,7 @@ exports.obtenerCarros = async (req, res) => {
 
         let carros;
         if (id === "all") {
-            carros = await Carro.find(); //.populate("reparaciones"); 
+            carros = await Carro.find().populate("reparaciones"); 
         } else {
             const usuario = await Usuario.findById(id).populate("carros");
 
