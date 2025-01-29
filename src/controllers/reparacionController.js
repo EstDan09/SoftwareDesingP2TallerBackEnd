@@ -1,18 +1,18 @@
 const Reparacion = require("../models/Reparacion");
 const Carro = require("../models/Carro");
 
-exports.crearReparacion = async(req, res, next) => {
+exports.crearReparacion = async (req, res, next) => {
     try {
 
-        const { nombre, encargado, estado, placa } = req.body;
+        const { nombre, precio, encargado, estado, placa } = req.body;
 
-        if (!nombre || !encargado || !estado || !placa) {
+        if (!nombre || !precio || !encargado || !estado || !placa) {
             return res.status(400).json({
                 msg: "Todos los campos son obligatorios"
             });
         }
 
-        const carro = await Carro.findOne({placa});
+        const carro = await Carro.findOne({ placa });
         if (!carro) {
             return res.status(400).json({
                 msg: "Carro no encontrado"
@@ -23,6 +23,7 @@ exports.crearReparacion = async(req, res, next) => {
 
         const newReparacion = new Reparacion({
             nombre,
+            precio,
             encargado,
             estado,
             fotoEstado
@@ -48,7 +49,7 @@ exports.crearReparacion = async(req, res, next) => {
 exports.obtenerReparaciones = async (req, res) => {
     try {
         const { id } = req.params;
-        
+
         let reparaciones;
 
         if (id === "all") {
@@ -56,8 +57,8 @@ exports.obtenerReparaciones = async (req, res) => {
         } else {
             const carro = await Carro.findById(id).populate("reparaciones");
 
-            if(!carro) {
-                return res.status(404).json( {msg: "Carro no encontrado."});
+            if (!carro) {
+                return res.status(404).json({ msg: "Carro no encontrado." });
             }
 
             reparaciones = carro.reparaciones;
@@ -73,3 +74,84 @@ exports.obtenerReparaciones = async (req, res) => {
         res.status(500).send("Hubo un error al obtener las reparaciones.");
     }
 }
+
+exports.empezarAReparar = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ msg: "Se requiere el ID de la reparación." });
+        }
+
+        const reparacion = await Reparacion.findById(id);
+
+        if (!reparacion) {
+            return res.status(404).json({ msg: "Reparación no encontrada." });
+        }
+
+        reparacion.estado = "Reparando";
+        await reparacion.save();
+
+        res.status(200).json({
+            msg: "La reparación ha comenzado.",
+            reparacion
+        });
+
+    } catch (error) {
+        console.error("Error al iniciar la reparación:", error);
+        res.status(500).send("Hubo un error al actualizar la reparación.");
+    }
+};
+
+exports.terminarDeReparar = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ msg: "Se requiere el ID de la reparación." });
+        }
+
+        const reparacion = await Reparacion.findById(id);
+
+        if (!reparacion) {
+            return res.status(404).json({ msg: "Reparación no encontrada." });
+        }
+
+        reparacion.estado = "Finalizado";
+        await reparacion.save();
+
+        res.status(200).json({
+            msg: "La reparación ha comenzado.",
+            reparacion
+        });
+
+    } catch (error) {
+        console.error("Error al iniciar la reparación:", error);
+        res.status(500).send("Hubo un error al actualizar la reparación.");
+    }
+};
+
+exports.obtenerReparacion = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ msg: "Se requiere el ID de la reparación." });
+        }
+
+        const reparacion = await Reparacion.findById(id);
+
+        if (!reparacion) {
+            return res.status(404).json({ msg: "Reparación no encontrada." });
+        }
+
+        res.status(200).json({
+            msg: "Reparación obtenida exitosamente.",
+            data: reparacion,
+        });
+
+    } catch (error) {
+        console.error("Error al obtener la reparación:", error);
+        res.status(500).send("Hubo un error al obtener la reparación.");
+    }
+};

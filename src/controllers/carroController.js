@@ -44,7 +44,7 @@ exports.crearCarro = async (req, res, next) => {
         console.error("Error al crear el carro:", error);
         res.status(500).send("Hubo un error al crear el carro.");
     }
-}
+};
 
 exports.obtenerCarros = async (req, res) => {
     try {
@@ -86,4 +86,4 @@ exports.obtenerCarro = async (req, res) => {
         console.error(error);
         res.status(500).send("Hubo un error al obtener el carro");
       }
-}
+};

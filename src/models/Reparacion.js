@@ -6,6 +6,10 @@ const ReparacionSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        precio: {
+            type: String,
+            required: true
+        },
         encargado: {
             type: String,
             requiered: true
