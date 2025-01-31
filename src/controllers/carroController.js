@@ -44,7 +44,7 @@ exports.crearCarro = async (req, res, next) => {
         console.error("Error al crear el carro:", error);
         res.status(500).send("Hubo un error al crear el carro.");
     }
-}
+};
 
 exports.obtenerCarros = async (req, res) => {
     try {
@@ -52,7 +52,7 @@ exports.obtenerCarros = async (req, res) => {
 
         let carros;
         if (id === "all") {
-            carros = await Carro.find(); //.populate("reparaciones"); 
+            carros = await Carro.find().populate("reparaciones"); 
         } else {
             const usuario = await Usuario.findById(id).populate("carros");
 
@@ -86,4 +86,4 @@ exports.obtenerCarro = async (req, res) => {
         console.error(error);
         res.status(500).send("Hubo un error al obtener el carro");
       }
-}
+};
