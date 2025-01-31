@@ -25,8 +25,9 @@ const webCorsOptions = {
   credentials: true,
 };
 
+app.use("/public", cors());
 app.use(cors(webCorsOptions));
-app.use("/public", cors(mobileCorsOptions));
+app.use("/public", cors());
 
 // Middleware para analizar JSON y aumentar el límite
 app.use(express.json({ limit: "100mb" }));
