@@ -164,7 +164,7 @@ exports.aprobarReparacion = async (req, res) => {
             return res.status(400).json({ msg: "Se requiere el ID de la reparación." });
         }
 
-        if (!["approved", "declined"].contains(req.query.state)) {
+        if (!["Aprobado", "Denegado"].contains(req.query.state)) {
             return res.status(400).json({ msg: "No se envió una opción de aprobación válida" });
         }
 
@@ -174,7 +174,7 @@ exports.aprobarReparacion = async (req, res) => {
             return res.status(404).json({ msg: "Reparación no encontrada." });
         }
 
-        reparacion.aprobado = "approved";
+        reparacion.aprobado = req.query.state;
         await reparacion.save();
 
         res.status(200).json({ msg: "Se actualizó la reparación." });
