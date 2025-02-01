@@ -48,7 +48,7 @@ exports.obtenerUsuario = async (req, res) => {
       return res.status(400).json({ msg: "Se requiere ID de usuario." });
     }
 
-    const user = await Usuario.findById(req.params.id);
+    const user = await Usuario.findById(req.params.id).select("-password");
 
     res.status(200).json({ msg: "Usuario obtenido exitosamente.", data: user });
   } catch (error) {
@@ -58,23 +58,25 @@ exports.obtenerUsuario = async (req, res) => {
 };
 
 exports.verificarUsuario = async (req, res) => {
-    try {
-        if (!req.query.correo) {
-            return res.status(400).json({ msg: "Debe colocar un correo electrónico" });
-        }
-        if (!req.query.password) {
-            return res.status(400).json({ msg: "Por favor, ingrese una contraseña" });
-        }
-
-        const user = await Usuario.findOne({correo: req.query.correo});
-
-        if (user.password === req.query.password) {
-            return res.status(200).json({ msg: "Usuario verificado", data: user });
-        }
-
-        res.status(400).json({ msg: "Contraseña incorrecta", data: null });
-
-    } catch (error) {
-        console.error(error);
+  try {
+    if (!req.query.correo) {
+      return res.status(400).json({ msg: "Debe colocar un correo electrónico" });
     }
+    if (!req.query.password) {
+      return res.status(400).json({ msg: "Por favor, ingrese una contraseña" });
+    }
+
+    const user = await Usuario.findOne({correo: req.query.correo});
+
+    if (user.password == req.query.password) {
+      const id = user.id;
+      
+      return res.status(200).json({ msg: "Usuario verificado", id: user.id });
+    }
+
+    res.status(400).json({ msg: "Contraseña incorrecta", data: "" });
+
+  } catch (error) {
+    console.error(error);
+  }
 }

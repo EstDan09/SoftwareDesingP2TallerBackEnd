@@ -155,3 +155,32 @@ exports.obtenerReparacion = async (req, res) => {
         res.status(500).send("Hubo un error al obtener la reparación.");
     }
 };
+
+exports.aprobarReparacion = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ msg: "Se requiere el ID de la reparación." });
+        }
+
+        if (!["approved", "declined"].contains(req.query.state)) {
+            return res.status(400).json({ msg: "No se envió una opción de aprobación válida" });
+        }
+
+        const reparacion = await Reparacion.findById(id);
+
+        if (!reparacion) {
+            return res.status(404).json({ msg: "Reparación no encontrada." });
+        }
+
+        reparacion.aprobado = "approved";
+        await reparacion.save();
+
+        res.status(200).json({ msg: "Se actualizó la reparación." });
+
+    } catch (error) {
+        console.error("Error al actualizar la reparación:", error);
+        res.status(500).send("Hubo un error al actualizar la reparación.");
+    }
+}
