@@ -1,7 +1,7 @@
 const Carro = require("../models/Carro");
 const Usuario = require("../models/Usuario");
 
-exports.crearCarro = async (req, res, next) => {
+exports.crearCarro = async (req, res) => {
     try {
         const { correo, placa, color, modelo, marca, year, estado } = req.body;
 
