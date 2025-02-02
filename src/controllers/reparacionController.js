@@ -164,7 +164,7 @@ exports.aprobarReparacion = async (req, res) => {
             return res.status(400).json({ msg: "Se requiere el ID de la reparación." });
         }
 
-        if (!["approved", "declined"].contains(req.query.state)) {
+        if (!["approved", "declined"].includes(req.query.state)) {
             return res.status(400).json({ msg: "No se envió una opción de aprobación válida" });
         }
 
