@@ -7,6 +7,7 @@ module.exports = function(app) {
     app.get("/reparacion/unique/:id", reparacionController.obtenerReparacion);
     app.post("/reparacion/repair/:id", reparacionController.empezarAReparar);
     app.post("/reparacion/finish/:id", reparacionController.terminarDeReparar);
+    app.get("/reparacion/user/:id", reparacionController.obtenerReparacionesPorUsuario);
     
     //Cliente
     app.put("/public/reparacion/approve/:id", reparacionController.aprobarReparacion);

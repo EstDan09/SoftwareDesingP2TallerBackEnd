@@ -14,6 +14,10 @@ const ReparacionSchema = mongoose.Schema(
             type: String,
             requiered: true
         },
+        infoCarro: {
+            type: String,
+            requiered: true
+        },
         estado: {
             type: String,
             required: true,

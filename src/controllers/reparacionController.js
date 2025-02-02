@@ -4,9 +4,9 @@ const Carro = require("../models/Carro");
 exports.crearReparacion = async (req, res, next) => {
     try {
 
-        const { nombre, precio, encargado, estado, placa } = req.body;
+        const { nombre, precio, encargado, estado, placa, infoCarro } = req.body;
 
-        if (!nombre || !precio || !encargado || !estado || !placa) {
+        if (!nombre || !precio || !encargado || !estado || !placa || !infoCarro) {
             return res.status(400).json({
                 msg: "Todos los campos son obligatorios"
             });
@@ -25,6 +25,7 @@ exports.crearReparacion = async (req, res, next) => {
             nombre,
             precio,
             encargado,
+            infoCarro,
             estado,
             fotoEstado
         });
@@ -184,3 +185,32 @@ exports.aprobarReparacion = async (req, res) => {
         res.status(500).send("Hubo un error al actualizar la reparación.");
     }
 }
+
+exports.obtenerReparacionesPorUsuario = async (req, res) => {
+    try {
+        const { usuarioId } = req.params;
+
+        if (!usuarioId) {
+            return res.status(400).json({ msg: "Se requiere el ID del usuario." });
+        }
+
+        const usuario = await Usuario.findById(usuarioId).populate("carros");
+
+        if (!usuario) {
+            return res.status(404).json({ msg: "Usuario no encontrado." });
+        }
+
+        const placasUsuario = usuario.carros.map(carro => carro.placa);
+
+        const reparaciones = await Reparacion.find({ placa: { $in: placasUsuario } });
+
+        res.status(200).json({
+            msg: "Lista de reparaciones obtenida exitosamente.",
+            data: reparaciones,
+        });
+
+    } catch (error) {
+        console.error("Error al obtener las reparaciones del usuario:", error);
+        res.status(500).send("Hubo un error al obtener las reparaciones del usuario.");
+    }
+};
