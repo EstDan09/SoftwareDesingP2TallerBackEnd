@@ -3,7 +3,6 @@ const Carro = require("../models/Carro");
 
 exports.crearReparacion = async (req, res, next) => {
     try {
-
         const { nombre, precio, encargado, estado, placa, infoCarro } = req.body;
 
         if (!nombre || !precio || !encargado || !estado || !placa || !infoCarro) {
@@ -34,18 +33,20 @@ exports.crearReparacion = async (req, res, next) => {
 
         carro.reparaciones.push(reparacion._id);
 
+        carro.estado = "Diagnosticando";
+
         await carro.save();
 
         res.status(201).json({
-            msg: "Reparacion creada y asociada al carro exitosamente.",
+            msg: "Reparación creada y asociada al carro exitosamente. Estado del carro actualizado a 'Diagnosticando'.",
             reparacion
         });
 
     } catch (error) {
-        console.error("Error al crear la reparacion:", error);
-        res.status(500).send("Hubo un error al crear la reparacion.");
+        console.error("Error al crear la reparación:", error);
+        res.status(500).send("Hubo un error al crear la reparación.");
     }
-}
+};
 
 exports.obtenerReparaciones = async (req, res) => {
     try {
@@ -90,17 +91,29 @@ exports.empezarAReparar = async (req, res) => {
             return res.status(404).json({ msg: "Reparación no encontrada." });
         }
 
+        // Buscar el carro que contiene esta reparación en su lista
+        const carro = await Carro.findOne({ reparaciones: id });
+
+        if (!carro) {
+            return res.status(404).json({ msg: "Carro asociado a la reparación no encontrado." });
+        }
+
+        // Actualizar estados
         reparacion.estado = "Reparando";
+        carro.estado = "Reparando";
+
         await reparacion.save();
+        await carro.save();
 
         res.status(200).json({
-            msg: "La reparación ha comenzado.",
-            reparacion
+            msg: "La reparación ha comenzado y el estado del carro ha sido actualizado a 'Reparando'.",
+            reparacion,
+            carro
         });
 
     } catch (error) {
         console.error("Error al iniciar la reparación:", error);
-        res.status(500).send("Hubo un error al actualizar la reparación.");
+        res.status(500).send("Hubo un error al actualizar la reparación y el estado del carro.");
     }
 };
 
@@ -121,14 +134,31 @@ exports.terminarDeReparar = async (req, res) => {
         reparacion.estado = "Finalizado";
         await reparacion.save();
 
+        const carro = await Carro.findOne({ reparaciones: id });
+
+        if (!carro) {
+            return res.status(404).json({ msg: "Carro asociado a la reparación no encontrado." });
+        }
+
+        const reparacionesPendientes = await Reparacion.find({
+            _id: { $in: carro.reparaciones },
+            estado: { $ne: "Finalizado" }
+        });
+
+        if (reparacionesPendientes.length === 0) {
+            carro.estado = "Listo para retiro";
+            await carro.save();
+        }
+
         res.status(200).json({
-            msg: "La reparación ha comenzado.",
-            reparacion
+            msg: "La reparación ha finalizado.",
+            reparacion,
+            carro
         });
 
     } catch (error) {
-        console.error("Error al iniciar la reparación:", error);
-        res.status(500).send("Hubo un error al actualizar la reparación.");
+        console.error("Error al finalizar la reparación:", error);
+        res.status(500).send("Hubo un error al actualizar la reparación y el estado del carro.");
     }
 };
 
@@ -214,3 +244,33 @@ exports.obtenerReparacionesPorUsuario = async (req, res) => {
         res.status(500).send("Hubo un error al obtener las reparaciones del usuario.");
     }
 };
+
+exports.eliminarReparacion = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ msg: "Se requiere el ID de la reparación." });
+        }
+
+        const reparacion = await Reparacion.findById(id);
+        if (!reparacion) {
+            return res.status(404).json({ msg: "Reparación no encontrada." });
+        }
+
+        const carro = await Carro.findOne({ reparaciones: id });
+        if (carro) {
+            carro.reparaciones = carro.reparaciones.filter(repId => repId.toString() !== id);
+            await carro.save();
+        }
+
+        await Reparacion.findByIdAndDelete(id);
+
+        res.status(200).json({ msg: "Reparación eliminada correctamente." });
+
+    } catch (error) {
+        console.error("Error al eliminar la reparación:", error);
+        res.status(500).send("Hubo un error al eliminar la reparación.");
+    }
+};
+

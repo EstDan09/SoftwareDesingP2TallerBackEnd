@@ -13,4 +13,5 @@ module.exports = function(app) {
     app.put("/public/reparacion/approve/:id", reparacionController.aprobarReparacion);
     app.get("/public/reparacion/show/:id", reparacionController.obtenerReparaciones);
 
+    app.delete("/reparacion/delete/:id", reparacionController.eliminarReparacion);    
 }
