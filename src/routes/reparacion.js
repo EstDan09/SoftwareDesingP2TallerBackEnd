@@ -8,10 +8,10 @@ module.exports = function(app) {
     app.post("/reparacion/repair/:id", reparacionController.empezarAReparar);
     app.post("/reparacion/finish/:id", reparacionController.terminarDeReparar);
     app.get("/reparacion/user/:id", reparacionController.obtenerReparacionesPorUsuario);
+    app.delete("/reparacion/delete/:id", reparacionController.eliminarReparacion);
     
     //Cliente
     app.put("/public/reparacion/approve/:id", reparacionController.aprobarReparacion);
     app.get("/public/reparacion/show/:id", reparacionController.obtenerReparaciones);
-
-    app.delete("/reparacion/delete/:id", reparacionController.eliminarReparacion);    
+    app.get("/public/reparacion/user/:id", reparacionController.obtenerReparacionesPorUsuario);    
 }

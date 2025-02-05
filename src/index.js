@@ -31,7 +31,7 @@ app.use("/public", cors(mobileCorsOptions)); */
 
 const allowedOrigins = [
   process.env.WEB_URL, 
-  process.env.MOBILE_URL,
+  // process.env.MOBILE_URL,
   "https://lively-faun-6b1b5b.netlify.app"
 ];
 
@@ -41,6 +41,7 @@ const corsOptions = {
   credentials: true,
 };
 
+app.use("/public", cors());
 app.use(cors(corsOptions));
 
 // Middleware para analizar JSON y aumentar el límite
