@@ -7,5 +7,5 @@ module.exports = function(app) {
     app.post("/reparacion/repair/:id", reparacionController.empezarAReparar);
     app.post("/reparacion/finish/:id", reparacionController.terminarDeReparar);
     app.get("/reparacion/user/:id", reparacionController.obtenerReparacionesPorUsuario);
-
+    app.delete("/reparacion/delete/:id", reparacionController.eliminarReparacion);    
 }

@@ -1,4 +1,38 @@
 const Usuario = require("../models/Usuario");
+const Carro = require("../models/Carro");
+const Reparacion = require("../models/Reparacion");
+
+exports.eliminarUsuario = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ msg: "Se requiere el ID del usuario." });
+        }
+
+        const usuario = await Usuario.findById(id);
+
+        if (!usuario) {
+            return res.status(404).json({ msg: "Usuario no encontrado." });
+        }
+
+        const carros = await Carro.find({ _id: { $in: usuario.carros } });
+
+        const reparacionesIds = carros.flatMap(carro => carro.reparaciones);
+
+        await Reparacion.deleteMany({ _id: { $in: reparacionesIds } });
+
+        await Carro.deleteMany({ _id: { $in: usuario.carros } });
+
+        await Usuario.findByIdAndDelete(id);
+
+        res.status(200).json({ msg: "Usuario eliminado junto con sus carros y reparaciones." });
+
+    } catch (error) {
+        console.error("Error al eliminar el usuario:", error);
+        res.status(500).send("Hubo un error al eliminar el usuario.");
+    }
+};
 
 exports.crearUsuario = async (req, res) => {
   try {
@@ -31,7 +65,9 @@ exports.crearUsuario = async (req, res) => {
 
 exports.obtenerUsuarios = async (req, res) => {
   try {
-    const usuarios = await Usuario.find().populate('carros'); 
+    const usuarios = await Usuario.find()
+      .lean(); 
+
     res.status(200).json({
       msg: "Lista de usuarios obtenida exitosamente.",
       data: usuarios,

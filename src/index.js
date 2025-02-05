@@ -13,7 +13,7 @@ const app = express();
 connectDB();
 //
 // Middleware para habilitar CORS
-const mobileCorsOptions = {
+/* const mobileCorsOptions = {
   origin: process.env.MOBILE_URL, 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, 
@@ -26,7 +26,21 @@ const webCorsOptions = {
 };
 
 app.use(cors(webCorsOptions));
-app.use("/public", cors(mobileCorsOptions));
+app.use("/public", cors(mobileCorsOptions)); */
+
+const allowedOrigins = [
+  process.env.WEB_URL, 
+  process.env.MOBILE_URL,
+  "https://lively-faun-6b1b5b.netlify.app"
+];
+
+const corsOptions = {
+  origin: allowedOrigins,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // Middleware para analizar JSON y aumentar el límite
 app.use(express.json({ limit: "100mb" }));
